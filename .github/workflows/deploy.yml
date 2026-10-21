@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       # Адрес сайта. Пока домена нет — GitHub Pages. Когда будет домен, задать переменную репозитория SITE_URL.
-      SITE_URL: ${{ vars.SITE_URL || 'https://lex660.github.io/Agregate' }}
+      SITE_URL: ${{ vars.SITE_URL || 'https://lex660.github.io/vsay-rassrochka' }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4

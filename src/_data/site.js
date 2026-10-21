@@ -1,6 +1,6 @@
 // Адрес сайта задаётся при сборке переменной SITE_URL (см. .github/workflows/deploy.yml).
 // Пока домен не выбран, сайт работает по адресу GitHub Pages.
-const url = (process.env.SITE_URL || "https://lex660.github.io/Agregate").replace(/\/$/, "");
+const url = (process.env.SITE_URL || "https://lex660.github.io/vsay-rassrochka").replace(/\/$/, "");
 
 export default {
   name: "Сравни рассрочку",

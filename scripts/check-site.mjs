@@ -5,12 +5,13 @@ import { join } from "node:path";
 
 const OUT = "_site";
 const data = JSON.parse(readFileSync("data/tariffs.json", "utf8"));
+const site = (await import("../src/_data/site.js")).default;
 const errors = [];
 const warn = [];
 
 const companyHosts = data.companies.filter((c) => c.url).map((c) => new URL(c.url).hostname);
 const ALLOWED = new Set([...companyHosts, "wa.me", "yandex.ru", "mc.yandex.ru", "mc.yandex.com", "yastatic.net"]);
-const FORBIDDEN = [/vsay-rassrochka/i, /workers\.dev/i, /googletagmanager/i, /google-analytics/i, /gtag\(/];
+const FORBIDDEN = [/vsay-rassrochka\.ru/i, /workers\.dev/i, /googletagmanager/i, /google-analytics/i, /gtag\(/];
 
 function walk(dir) {
   return readdirSync(dir).flatMap((f) => {
@@ -53,11 +54,10 @@ for (const f of walk("src/assets/js")) {
 
 const sitemap = readFileSync(join(OUT, "sitemap.xml"), "utf8");
 for (const m of sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)) {
-  const path = new URL(m[1]).pathname.replace(/^\/Agregate/, "");
+  const path = new URL(m[1]).pathname.slice(site.pathPrefix.length);
   if (!existsSync(join(OUT, path, "index.html"))) errors.push(`sitemap: нет страницы ${path}`);
 }
 
-const site = (await import("../src/_data/site.js")).default;
 if (!site.operator?.name) warn.push("Политика ПДн: не указан оператор (ФИО или наименование) — src/_data/site.js, operator.name");
 
 const today = new Date();

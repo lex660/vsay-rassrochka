@@ -9,7 +9,7 @@
 //   SEND_OK            — "1", чтобы присылать сообщение и когда всё совпало
 import { SOURCES, parseTasnim, parseKupitak, parseLariba, parseVatan, parseAlBaraka, compareAll, staleCompanies } from "./parsers.mjs";
 
-const UA = "Mozilla/5.0 (compatible; tariff-check; +https://github.com/lex660/Agregate)";
+const UA = "Mozilla/5.0 (compatible; tariff-check; +https://github.com/lex660/vsay-rassrochka)";
 
 async function get(url, tries = 3) {
   let last;
@@ -78,7 +78,7 @@ export function formatReport({ ok, diffs, errors, stale }, { markdown = false } 
 }
 
 export async function run() {
-  const tariffsUrl = process.env.TARIFFS_URL || "https://raw.githubusercontent.com/lex660/Agregate/main/data/tariffs.json";
+  const tariffsUrl = process.env.TARIFFS_URL || "https://raw.githubusercontent.com/lex660/vsay-rassrochka/main/data/tariffs.json";
   const data = JSON.parse(await get(tariffsUrl));
   const result = await reconcile(data);
   if (!result.ok || result.stale.length || process.env.SEND_OK === "1") await telegram(formatReport(result));
