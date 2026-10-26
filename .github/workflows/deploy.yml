@@ -16,8 +16,8 @@ jobs:
       # Адрес сайта. Пока домена нет — GitHub Pages. Когда будет домен, задать переменную репозитория SITE_URL.
       SITE_URL: ${{ vars.SITE_URL || 'https://lex660.github.io/vsay-rassrochka' }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: npm
@@ -30,10 +30,10 @@ jobs:
         run: npm run build
       - name: Проверка ссылок, CSP, дисклеймера, согласия, sitemap
         run: npm run check
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: _site
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: site
           path: _site
@@ -45,7 +45,7 @@ jobs:
     if: vars.YC_BUCKET != ''
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: site
           path: _site
@@ -74,4 +74,4 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
